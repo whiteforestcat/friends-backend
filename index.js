@@ -8,6 +8,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
+import { register } from "./controllers/auth.js";   // need to include auth.js
 
 // MIDDLEWARE CONFIGURATIONS
 const __filename = fileURLToPath(import.meta.url); // to enable grabbing file URL
@@ -35,6 +36,11 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
+
+// ROUTES
+app.post("/auth/register", upload.single("picture"), register);
+// upload.single("picture") is a middleware like auth in GA, refer to upload variable
+// register is a controller
 
 // MONGOOSE SETUP
 const PORT = process.env.PORT || 5050;
