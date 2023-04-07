@@ -11,6 +11,11 @@ import { fileURLToPath } from "url";
 import authRoutes from "./routes/auth.js"
 import userRoutes from "./routes/users.js"
 import { register } from "./controllers/auth.js";   // need to include auth.js
+import {createPost} from "./controllers/posts.js"
+import { verifyToken } from "./middleware/auth.js";
+import User from "./models/User.js";
+import Post from "./models/Post.js";
+import { users, posts } from "./data/seed.js";
 
 // MIDDLEWARE CONFIGURATIONS
 const __filename = fileURLToPath(import.meta.url); // to enable grabbing file URL
@@ -44,6 +49,7 @@ app.post("/auth/register", upload.single("picture"), register);
 // upload.single("picture") is a middleware like auth in GA, refer to upload variable
 // register is a controller
 // this route is in index.js cos we need the upload function
+app.post("/posts", verifyToken, upload.single("picture"), createPost);  // access the picture key in the object passed from frontend
 
 // ROTUES
 app.use("/auth", authRoutes)
@@ -58,5 +64,10 @@ mongoose
   })
   .then(() => {
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+
+    // seeding data upon server launch
+    // run only once
+    // User.insertMany(users)
+    // Post.insertMany(posts)
   })
   .catch((error) => console.log(`${error} did not connect`));
