@@ -6,12 +6,12 @@ import User from "../models/User.js"; // need to include User.js
 export const register = async (req, res) => {
   try {
     const {
-      firtstName,
+      firstName,
       lastName,
       email,
       password,
       picturePath,
-      freinds,
+      friends,
       location,
       occupation,
     } = req.body;
@@ -21,12 +21,12 @@ export const register = async (req, res) => {
     const passwordHash = await bcrypt.hash(password, salt);
 
     const newUser = new User({
-      firtstName,
+      firstName,
       lastName,
       email,
       password: passwordHash,
       picturePath,
-      freinds,
+      friends,
       location,
       occupation,
       viewedProfile: Math.floor(Math.random() * 1000), // dummy value
@@ -55,6 +55,7 @@ export const login = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET); // first argument is payload
     res.status(200).json({ token, user });
   } catch (error) {
+    console.log(error.message);
     res.status(500).json({ error: error.message });
   }
 };

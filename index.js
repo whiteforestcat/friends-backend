@@ -8,10 +8,10 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
-import authRoutes from "./routes/auth.js"
-import userRoutes from "./routes/users.js"
-import { register } from "./controllers/auth.js";   // need to include auth.js
-import {createPost} from "./controllers/posts.js"
+import authRoutes from "./routes/auth.js";
+import userRoutes from "./routes/users.js";
+import { register } from "./controllers/auth.js"; // need to include auth.js
+import { createPost } from "./controllers/posts.js";
 import { verifyToken } from "./middleware/auth.js";
 import User from "./models/User.js";
 import Post from "./models/Post.js";
@@ -49,11 +49,11 @@ app.post("/auth/register", upload.single("picture"), register);
 // upload.single("picture") is a middleware like auth in GA, refer to upload variable
 // register is a controller
 // this route is in index.js cos we need the upload function
-app.post("/posts", verifyToken, upload.single("picture"), createPost);  // access the picture key in the object passed from frontend
+app.post("/posts", verifyToken, upload.single("picture"), createPost); // access the picture key in the object passed from frontend
 
 // ROTUES
-app.use("/auth", authRoutes)
-app.use("/users", userRoutes)
+app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
 
 // MONGOOSE SETUP
 const PORT = process.env.PORT || 5050;
