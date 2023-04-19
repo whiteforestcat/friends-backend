@@ -9,7 +9,7 @@ const postSchema = mongoose.Schema(
     description: { type: String },
     picturePath: { type: String },
     userPicturePath: { type: String },
-    likes: { type: Map, of: Boolean }, // it is better to use Map than array to store likes, "of" is referring to the data type of elements
+    likes: { type: Map, of: Boolean }, // it is better to use Map (ie object) than array to store likes, "of" is referring to the data type of elements
     comments: { type: Array, default: [] },
   },
   { timestamps: true }
